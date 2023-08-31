@@ -1,4 +1,6 @@
-﻿namespace Estacionamiento_C.Models
+﻿using System.Collections.Generic;
+
+namespace Estacionamiento_C.Models
 {
     public class Persona
     {
@@ -6,9 +8,12 @@
         public string Nombre { get; set; }
         public string Apellido { get; set; }
 
-        public Direccion Direccion { get; set; }
+        public int DNI { get; set; }
+        
 
         public List<Telefono> Telefonos { get; set; }
+
+        public string Foto { get; set; }
 
     }
 }

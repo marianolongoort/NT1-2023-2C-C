@@ -1,9 +1,10 @@
 ﻿namespace Estacionamiento_C.Models
 {
-    public class Cliente
+    public class Cliente : Persona
     {
-        public int Id { get; set; }
-        public string Nombre { get; set; } = string.Empty;
+        public long CUIT { get; set; }
+
+        public Direccion Direccion { get; set; }                
 
     }
 }
