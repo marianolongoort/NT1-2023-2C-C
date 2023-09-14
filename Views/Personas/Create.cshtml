@@ -1,0 +1,15 @@
+﻿@model Persona
+
+<form action="/personas/create" method="post">
+    <div>
+        <label>Nombre:</label>
+        <input type="text" name="nombre" value="@Model.Nombre"/>
+    </div>
+    <div>
+        <label>Apellido:</label>
+        <input type="text" name="apellido" value="@Model.Apellido"/>
+    </div>
+    <div>
+        <input type="submit" value="Crear" class="btn btn-primary"/>
+    </div>
+</form>

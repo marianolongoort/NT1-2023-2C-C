@@ -8,7 +8,9 @@
 
         public bool Principal { get; set; }
         public TipoTelefono Tipo { get; set; }
-        public Persona Persona { get; set; }
+
+        public int PersonaId { get; set; }  //prop relacional
+        public Persona Persona { get; set; } //prop  nav
 
 
     }

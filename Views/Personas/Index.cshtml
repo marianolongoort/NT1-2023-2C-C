@@ -1,0 +1,35 @@
+﻿@model List<Persona>
+
+<h1>Esta es la vista de Index de Personas</h1>
+
+@if (Model != null)
+{
+    if (Model.Any())
+    {
+        <h2>Las personas son:</h2>
+        foreach (Persona item in Model)
+        {
+            <p>
+                Nombre: @item.Nombre                    
+            </p>
+            <p>
+                Apellido: @item.Apellido
+            </p>
+            <p>
+                Id: @item.Id
+            </p>
+        }
+    }
+    else
+    {
+        <h2>No hay personas actualmente</h2>
+    }
+}
+else
+{
+    <h2>El controlador no me paso una lista</h2>
+}
+
+
+
+

@@ -14,5 +14,7 @@ namespace Estacionamiento_C.Models
 
         public string Foto { get; set; }
 
+        public List<ClienteVehiculo> ClientesVehiculos { get; set; }
+
     }
 }

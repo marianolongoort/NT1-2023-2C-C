@@ -1,4 +1,7 @@
-﻿namespace Estacionamiento_C.Models
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace Estacionamiento_C.Models
 {
     public class Direccion
     {
@@ -7,8 +10,12 @@
         public int Numero { get; set; }
         public int Piso { get; set; }
         public string Departamento { get; set; }
+
+        [Display(Name ="Codigo Postal")]
         public string CodigoPostal { get; set; }
-        public Cliente Cliente { get; set; }
+
+        public int ClienteId { get; set; } //prop    relacional
+        public Cliente Cliente { get; set; } //prop navegacional
 
     }
 }
