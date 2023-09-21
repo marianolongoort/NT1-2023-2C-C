@@ -1,6 +1,6 @@
 ﻿namespace Estacionamiento_C.Models
 {
-    public enum TipoTelefono
+    public enum TipoTelefonoEnum
     {
         Personal,
         Laboral,

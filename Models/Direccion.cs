@@ -14,6 +14,7 @@ namespace Estacionamiento_C.Models
         [Display(Name ="Codigo Postal")]
         public string CodigoPostal { get; set; }
 
+        [Display(Name ="Cliente")]
         public int ClienteId { get; set; } //prop    relacional
         public Cliente Cliente { get; set; } //prop navegacional
 

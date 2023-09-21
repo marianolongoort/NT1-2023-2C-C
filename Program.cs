@@ -1,4 +1,6 @@
+using Estacionamiento_C.Data;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -11,6 +13,8 @@ namespace Estacionamiento_C
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddDbContext<MiDbContext>(options => options.UseInMemoryDatabase("MiDb-C"));          
+            
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();

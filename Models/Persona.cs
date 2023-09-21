@@ -18,10 +18,10 @@ namespace Estacionamiento_C.Models
         [StringLength(100, MinimumLength = 2, ErrorMessage = ErrorMessages._reqStrMinMax)]
         public string Apellido { get; set; }
 
-        [Range(2,10,ErrorMessage = ErrorMessages._reqRange)]
+        [Range(1000000,99999999,ErrorMessage = ErrorMessages._reqRange)]
         public int DNI { get; set; }
 
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         [Required(ErrorMessage = ErrorMessages._reqMsg)]
         [Display(Name ="Fecha de Nacimiento")]
         public DateTime FechaNacimiento { get; set; }
@@ -32,6 +32,10 @@ namespace Estacionamiento_C.Models
 
         public List<Telefono> Telefonos { get; set; } 
         public string Foto { get; set; }
+
+        public string NombreCompleto { get {
+                return $"{Apellido}, {Nombre}";             
+        } }
 
     }
 }

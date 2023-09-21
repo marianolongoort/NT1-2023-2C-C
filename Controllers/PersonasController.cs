@@ -2,19 +2,25 @@
 using Estacionamiento_C.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Estacionamiento_C.Controllers
 {
     public class PersonasController : Controller
     {
-        
+        private readonly MiDbContext _miDb;
+
+        public PersonasController(MiDbContext miDb)
+        {
+            this._miDb = miDb;
+        }
 
         public IActionResult Index()
         {
             //listar todos los objetos de la entidad.
             //listar todas las personas.
-
-            return View(PersonasRepository.Personas);
+            var personasEnDb = _miDb.Personas.ToList();
+            return View(personasEnDb);
         }
 
         //atiende las peticiones del usuario para poder ofrecer 
@@ -40,7 +46,8 @@ namespace Estacionamiento_C.Controllers
             persona.Id = id;
             
             
-            PersonasRepository.Personas.Add(persona);
+            _miDb.Personas.Add(persona);
+            _miDb.SaveChanges();
 
             return RedirectToAction("Index");
         }
