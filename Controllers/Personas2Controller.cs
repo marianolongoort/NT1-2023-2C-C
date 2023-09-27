@@ -46,7 +46,15 @@ namespace Estacionamiento_C.Controllers
         // GET: Personas2/Create
         public IActionResult Create()
         {
-            return View();
+            Persona persona = new Persona() {
+                Apellido = "Longo",
+                Nombre = "Mariano",
+                DNI = 22333444,
+                Email = "mariano.longo@ort.edu.ar",
+                FechaNacimiento = new DateTime(1977,08,10)                                
+            };
+
+            return View(persona);
         }
 
         [HttpPost]

@@ -30,8 +30,8 @@ namespace Estacionamiento_C.Models
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-        public List<Telefono> Telefonos { get; set; } 
-        public string Foto { get; set; }
+        public List<Telefono> Telefonos { get; set; }
+        public string Foto { get; set; } = "default.jpg";
 
         public string NombreCompleto { get {
                 return $"{Apellido}, {Nombre}";             

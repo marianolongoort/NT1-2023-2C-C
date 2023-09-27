@@ -1,8 +1,11 @@
-﻿namespace Estacionamiento_C.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Estacionamiento_C.Models
 {
     public class Telefono
     {
         public int Id { get; set; }
+        [Display(Name ="Codigo de Area")]
         public CodigoDeAreaEnum CodArea { get; set; }
         public int Numero { get; set; }
 

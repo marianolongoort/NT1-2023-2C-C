@@ -15,9 +15,8 @@ namespace Estacionamiento_C.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<ClienteVehiculo>()
-                .HasKey(cv => new { cv.ClienteId,cv.VehiculoId}                 
-                );
+            
+            modelBuilder.Entity<ClienteVehiculo>().HasKey(cv => new { cv.ClienteId,cv.VehiculoId});
             
 
         }
