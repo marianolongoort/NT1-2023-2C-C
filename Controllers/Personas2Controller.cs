@@ -12,29 +12,30 @@ namespace Estacionamiento_C.Controllers
 {
     public class Personas2Controller : Controller
     {
-        private readonly MiDbContext _context;
+        private readonly MiDbContext _miDb;
 
         public Personas2Controller(MiDbContext context)
         {
-            _context = context;
+            _miDb = context;
         }
 
         // GET: Personas2
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-              return View(await _context.Personas.ToListAsync());
+              return View(_miDb.Personas.ToList());
         }
 
         // GET: Personas2/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Personas == null)
+            if (id == null || _miDb.Personas == null)
             {
                 return NotFound();
             }
 
-            var persona = await _context.Personas
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var persona = await _miDb.Personas.FirstOrDefaultAsync(m => m.Id == id);
+            
+            
             if (persona == null)
             {
                 return NotFound();
@@ -59,12 +60,12 @@ namespace Estacionamiento_C.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Apellido,DNI,FechaNacimiento,Email,Foto")] Persona persona)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,Apellido,DNI,FechaNacimiento,Email,Foto,NumeroFavorito")] Persona persona)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(persona);
-                await _context.SaveChangesAsync();
+                _miDb.Add(persona);                
+                await _miDb.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(persona);
@@ -73,12 +74,12 @@ namespace Estacionamiento_C.Controllers
         // GET: Personas2/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Personas == null)
+            if (id == null || _miDb.Personas == null)
             {
                 return NotFound();
             }
 
-            var persona = await _context.Personas.FindAsync(id);
+            var persona = await _miDb.Personas.FindAsync(id);
             if (persona == null)
             {
                 return NotFound();
@@ -102,8 +103,8 @@ namespace Estacionamiento_C.Controllers
             {
                 try
                 {
-                    _context.Update(persona);
-                    await _context.SaveChangesAsync();
+                    _miDb.Update(persona);
+                    await _miDb.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -124,12 +125,12 @@ namespace Estacionamiento_C.Controllers
         // GET: Personas2/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Personas == null)
+            if (id == null || _miDb.Personas == null)
             {
                 return NotFound();
             }
 
-            var persona = await _context.Personas
+            var persona = await _miDb.Personas
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (persona == null)
             {
@@ -144,23 +145,23 @@ namespace Estacionamiento_C.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Personas == null)
+            if (_miDb.Personas == null)
             {
                 return Problem("Entity set 'MiDbContext.Personas'  is null.");
             }
-            var persona = await _context.Personas.FindAsync(id);
+            var persona = await _miDb.Personas.FindAsync(id);
             if (persona != null)
             {
-                _context.Personas.Remove(persona);
+                _miDb.Personas.Remove(persona);
             }
             
-            await _context.SaveChangesAsync();
+            await _miDb.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool PersonaExists(int id)
         {
-          return _context.Personas.Any(e => e.Id == id);
+          return _miDb.Personas.Any(p => p.Id == id);
         }
     }
 }

@@ -18,6 +18,7 @@ namespace Estacionamiento_C.Models
         [StringLength(100, MinimumLength = 2, ErrorMessage = ErrorMessages._reqStrMinMax)]
         public string Apellido { get; set; }
 
+        [Display(Name ="Documento")]
         [Range(1000000,99999999,ErrorMessage = ErrorMessages._reqRange)]
         public int DNI { get; set; }
 
@@ -36,6 +37,8 @@ namespace Estacionamiento_C.Models
         public string NombreCompleto { get {
                 return $"{Apellido}, {Nombre}";             
         } }
+
+        public int NumeroFavorito { get; set; }
 
     }
 }
