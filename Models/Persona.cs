@@ -22,7 +22,7 @@ namespace Estacionamiento_C.Models
         [Range(1000000,99999999,ErrorMessage = ErrorMessages._reqRange)]
         public int DNI { get; set; }
 
-        [DataType(DataType.DateTime)]
+        [DataType(DataType.Date)]
         [Required(ErrorMessage = ErrorMessages._reqMsg)]
         [Display(Name ="Fecha de Nacimiento")]
         public DateTime FechaNacimiento { get; set; }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Estacionamiento_C.Data;
 using Estacionamiento_C.Models;
+using Microsoft.AspNetCore.Routing;
 
 namespace Estacionamiento_C.Controllers
 {
@@ -47,10 +48,22 @@ namespace Estacionamiento_C.Controllers
         }
 
         // GET: ClientesVehiculos/Create
-        public IActionResult Create()
+        public IActionResult Create(int? idCliente)
         {
-            ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Apellido");
-            ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "Id", "Id");
+            if(idCliente != null && _context.Clientes.Any(clt => clt.Id == idCliente.Value))
+            {
+                //definir la asociación para un cliente especifico
+                ViewBag.IdCliente = idCliente.Value;
+                
+            }
+            else
+            {
+                //Necesito definir a que cliente.
+                ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "NombreCompleto");
+            }
+
+            
+            ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "Id", "Patente");
             return View();
         }
 
@@ -67,26 +80,26 @@ namespace Estacionamiento_C.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Apellido", clienteVehiculo.ClienteId);
-            ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "Id", "Id", clienteVehiculo.VehiculoId);
+            ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "NombreCompleto", clienteVehiculo.ClienteId);
+            ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "Id", "Patente", clienteVehiculo.VehiculoId);
             return View(clienteVehiculo);
         }
 
         // GET: ClientesVehiculos/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? idCliente, int? idVehiculo)
         {
-            if (id == null || _context.ClientesVehiculos == null)
+            if (idCliente == null || idVehiculo == null || _context.ClientesVehiculos == null)
             {
                 return NotFound();
             }
 
-            var clienteVehiculo = await _context.ClientesVehiculos.FindAsync(id);
+            var clienteVehiculo = await _context.ClientesVehiculos.FindAsync(idCliente,idVehiculo);
             if (clienteVehiculo == null)
             {
                 return NotFound();
             }
-            ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Apellido", clienteVehiculo.ClienteId);
-            ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "Id", "Id", clienteVehiculo.VehiculoId);
+            ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "NombreCompleto", clienteVehiculo.ClienteId);
+            ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "Id", "Patente", clienteVehiculo.VehiculoId);
             return View(clienteVehiculo);
         }
 
@@ -95,9 +108,9 @@ namespace Estacionamiento_C.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ClienteId,VehiculoId")] ClienteVehiculo clienteVehiculo)
+        public async Task<IActionResult> Edit(int clienteId,int vehiculoId, [Bind("ClienteId,VehiculoId")] ClienteVehiculo clienteVehiculo)
         {
-            if (id != clienteVehiculo.ClienteId)
+            if (clienteId != clienteVehiculo.ClienteId || vehiculoId != clienteVehiculo.VehiculoId)
             {
                 return NotFound();
             }
@@ -122,8 +135,8 @@ namespace Estacionamiento_C.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Apellido", clienteVehiculo.ClienteId);
-            ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "Id", "Id", clienteVehiculo.VehiculoId);
+            ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "NombreCompleto", clienteVehiculo.ClienteId);
+            ViewData["VehiculoId"] = new SelectList(_context.Vehiculos, "Id", "Patente", clienteVehiculo.VehiculoId);
             return View(clienteVehiculo);
         }
 

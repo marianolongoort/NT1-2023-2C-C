@@ -13,8 +13,20 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="ClienteId" class="control-label"></label>
-                <select asp-for="ClienteId" class ="form-control" asp-items="ViewBag.ClienteId"></select>
+
+                @if (ViewBag.IdCliente != null)
+                {
+                    //tengo un cliente especifico
+                    <input asp-for="ClienteId" class="form-control" value="@ViewBag.IdCliente" type="hidden" />
+                }
+                else
+                {
+                    //tengo que seleccionar un cliente
+                    <label asp-for="ClienteId" class="control-label"></label>
+                    <select asp-for="ClienteId" class="form-control" asp-items="ViewBag.ClienteId"></select>
+                }
+
+
             </div>
             <div class="form-group">
                 <label asp-for="VehiculoId" class="control-label"></label>

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Estacionamiento_C.Models.ClienteVehiculo>
+﻿@model IEnumerable<ClienteVehiculo>
 
 @{
     ViewData["Title"] = "Index";
@@ -18,20 +18,20 @@
             <th>
                 @Html.DisplayNameFor(model => model.Vehiculo)
             </th>
-            <th></th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Cliente.Apellido)
+                @Html.DisplayFor(modelItem => item.Cliente.NombreCompleto)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Vehiculo.Id)
+                @Html.DisplayFor(modelItem => item.Vehiculo.Patente)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                <a asp-action="Edit" asp-route-idCliente="@item.ClienteId" asp-route-idVehiculo="@item.VehiculoId">Edit</a>
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>

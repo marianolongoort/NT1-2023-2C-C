@@ -65,7 +65,7 @@ namespace Estacionamiento_C.Controllers
                 await _miDb.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClienteId"] = new SelectList(_miDb.Clientes, "Id", "Apellido", direccion.ClienteId);
+            ViewData["ClienteId"] = new SelectList(_miDb.Clientes, "Id", "NombreCompleto", direccion.ClienteId);
             return View(direccion);
         }
 
@@ -82,7 +82,7 @@ namespace Estacionamiento_C.Controllers
             {
                 return NotFound();
             }
-            ViewData["ClienteId"] = new SelectList(_miDb.Clientes, "Id", "Apellido", direccion.ClienteId);
+            ViewData["ClienteId"] = new SelectList(_miDb.Clientes, "Id", "NombreCompleto", direccion.ClienteId);
             return View(direccion);
         }
 
