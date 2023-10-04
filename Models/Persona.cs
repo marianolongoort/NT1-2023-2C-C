@@ -38,7 +38,5 @@ namespace Estacionamiento_C.Models
                 return $"{Apellido}, {Nombre}";             
         } }
 
-        public int NumeroFavorito { get; set; }
-
     }
 }
