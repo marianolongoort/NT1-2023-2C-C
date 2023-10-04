@@ -10,85 +10,85 @@ using Estacionamiento_C.Models;
 
 namespace Estacionamiento_C.Controllers
 {
-    public class PersonasController : Controller
+    public class EmpleadosController : Controller
     {
         private readonly MiDbContext _context;
 
-        public PersonasController(MiDbContext context)
+        public EmpleadosController(MiDbContext context)
         {
             _context = context;
         }
 
-        // GET: Personas
+        // GET: Empleados
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Personas.ToListAsync());
+              return View(await _context.Empleados.ToListAsync());
         }
 
-        // GET: Personas/Details/5
+        // GET: Empleados/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Personas == null)
+            if (id == null || _context.Empleados == null)
             {
                 return NotFound();
             }
 
-            var persona = await _context.Personas
+            var empleado = await _context.Empleados
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (persona == null)
+            if (empleado == null)
             {
                 return NotFound();
             }
 
-            return View(persona);
+            return View(empleado);
         }
 
-        // GET: Personas/Create
+        // GET: Empleados/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Personas/Create
+        // POST: Empleados/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Apellido,DNI,FechaNacimiento,Email,Foto,NumeroFavorito")] Persona persona)
+        public async Task<IActionResult> Create([Bind("CodigoEmpleado,Id,Nombre,Apellido,DNI,FechaNacimiento,Email,Foto,NumeroFavorito")] Empleado empleado)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(persona);
+                _context.Add(empleado);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(persona);
+            return View(empleado);
         }
 
-        // GET: Personas/Edit/5
+        // GET: Empleados/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Personas == null)
+            if (id == null || _context.Empleados == null)
             {
                 return NotFound();
             }
 
-            var persona = await _context.Personas.FindAsync(id);
-            if (persona == null)
+            var empleado = await _context.Empleados.FindAsync(id);
+            if (empleado == null)
             {
                 return NotFound();
             }
-            return View(persona);
+            return View(empleado);
         }
 
-        // POST: Personas/Edit/5
+        // POST: Empleados/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Apellido,DNI,FechaNacimiento,Email,Foto,NumeroFavorito")] Persona persona)
+        public async Task<IActionResult> Edit(int id, [Bind("CodigoEmpleado,Id,Nombre,Apellido,DNI,FechaNacimiento,Email,Foto,NumeroFavorito")] Empleado empleado)
         {
-            if (id != persona.Id)
+            if (id != empleado.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace Estacionamiento_C.Controllers
             {
                 try
                 {
-                    _context.Update(persona);
+                    _context.Update(empleado);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PersonaExists(persona.Id))
+                    if (!EmpleadoExists(empleado.Id))
                     {
                         return NotFound();
                     }
@@ -113,49 +113,49 @@ namespace Estacionamiento_C.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(persona);
+            return View(empleado);
         }
 
-        // GET: Personas/Delete/5
+        // GET: Empleados/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Personas == null)
+            if (id == null || _context.Empleados == null)
             {
                 return NotFound();
             }
 
-            var persona = await _context.Personas
+            var empleado = await _context.Empleados
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (persona == null)
+            if (empleado == null)
             {
                 return NotFound();
             }
 
-            return View(persona);
+            return View(empleado);
         }
 
-        // POST: Personas/Delete/5
+        // POST: Empleados/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Personas == null)
+            if (_context.Empleados == null)
             {
-                return Problem("Entity set 'MiDbContext.Personas'  is null.");
+                return Problem("Entity set 'MiDbContext.Empleados'  is null.");
             }
-            var persona = await _context.Personas.FindAsync(id);
-            if (persona != null)
+            var empleado = await _context.Empleados.FindAsync(id);
+            if (empleado != null)
             {
-                _context.Personas.Remove(persona);
+                _context.Empleados.Remove(empleado);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PersonaExists(int id)
+        private bool EmpleadoExists(int id)
         {
-          return _context.Personas.Any(e => e.Id == id);
+          return _context.Empleados.Any(e => e.Id == id);
         }
     }
 }

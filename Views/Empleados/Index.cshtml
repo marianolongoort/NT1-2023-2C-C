@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Estacionamiento_C.Models.Persona>
+﻿@model IEnumerable<Estacionamiento_C.Models.Empleado>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,6 +13,9 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.CodigoEmpleado)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Nombre)
             </th>
             <th>
@@ -22,14 +25,26 @@
                 @Html.DisplayNameFor(model => model.DNI)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.FechaNacimiento)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Email)
-            </th>            
-            <th>Acciones</th>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Foto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroFavorito)
+            </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (Persona item in Model) {
+@foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodigoEmpleado)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>
@@ -40,9 +55,17 @@
                 @Html.DisplayFor(modelItem => item.DNI)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.FechaNacimiento)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
-
+            <td>
+                @Html.DisplayFor(modelItem => item.Foto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroFavorito)
+            </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
