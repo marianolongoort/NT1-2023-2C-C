@@ -12,9 +12,9 @@ namespace Estacionamiento_C.Controllers
 {
     public class VehiculosController : Controller
     {
-        private readonly MiDbContext _context;
+        private readonly GarageContext _context;
 
-        public VehiculosController(MiDbContext context)
+        public VehiculosController(GarageContext context)
         {
             _context = context;
         }
@@ -141,7 +141,7 @@ namespace Estacionamiento_C.Controllers
         {
             if (_context.Vehiculos == null)
             {
-                return Problem("Entity set 'MiDbContext.Vehiculos'  is null.");
+                return Problem("Entity set 'GarageContext.Vehiculos'  is null.");
             }
             var vehiculo = await _context.Vehiculos.FindAsync(id);
             if (vehiculo != null)

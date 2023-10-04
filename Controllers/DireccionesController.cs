@@ -12,9 +12,9 @@ namespace Estacionamiento_C.Controllers
 {
     public class DireccionesController : Controller
     {
-        private readonly MiDbContext _miDb;
+        private readonly GarageContext _miDb;
 
-        public DireccionesController(MiDbContext context)
+        public DireccionesController(GarageContext context)
         {
             _miDb = context;
         }
@@ -148,7 +148,7 @@ namespace Estacionamiento_C.Controllers
         {
             if (_miDb.Direcciones == null)
             {
-                return Problem("Entity set 'MiDbContext.Direcciones'  is null.");
+                return Problem("Entity set 'GarageContext.Direcciones'  is null.");
             }
             var direccion = await _miDb.Direcciones.FindAsync(id);
             if (direccion != null)

@@ -12,9 +12,9 @@ namespace Estacionamiento_C.Controllers
 {
     public class EmpleadosController : Controller
     {
-        private readonly MiDbContext _context;
+        private readonly GarageContext _context;
 
-        public EmpleadosController(MiDbContext context)
+        public EmpleadosController(GarageContext context)
         {
             _context = context;
         }
@@ -141,7 +141,7 @@ namespace Estacionamiento_C.Controllers
         {
             if (_context.Empleados == null)
             {
-                return Problem("Entity set 'MiDbContext.Empleados'  is null.");
+                return Problem("Entity set 'GarageContext.Empleados'  is null.");
             }
             var empleado = await _context.Empleados.FindAsync(id);
             if (empleado != null)

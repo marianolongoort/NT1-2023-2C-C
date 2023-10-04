@@ -12,9 +12,9 @@ namespace Estacionamiento_C.Controllers
 {
     public class TelefonosController : Controller
     {
-        private readonly MiDbContext _miDb;
+        private readonly GarageContext _miDb;
 
-        public TelefonosController(MiDbContext context)
+        public TelefonosController(GarageContext context)
         {
             _miDb = context;
         }
@@ -152,7 +152,7 @@ namespace Estacionamiento_C.Controllers
         {
             if (_miDb.Telefonos == null)
             {
-                return Problem("Entity set 'MiDbContext.Telefonos'  is null.");
+                return Problem("Entity set 'GarageContext.Telefonos'  is null.");
             }
             var telefono = await _miDb.Telefonos.FindAsync(id);
             if (telefono != null)

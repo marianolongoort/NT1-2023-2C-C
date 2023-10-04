@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace Estacionamiento_C.Data
 {
-    public class MiDbContext : DbContext
+    public class GarageContext : DbContext
     {
-        public MiDbContext(DbContextOptions options) : base(options)
+        public GarageContext(DbContextOptions options) : base(options)
         {
                 
         }

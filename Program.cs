@@ -13,7 +13,7 @@ namespace Estacionamiento_C
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddDbContext<MiDbContext>(options => options.UseInMemoryDatabase("MiDb-C"));          
+            builder.Services.AddDbContext<GarageContext>(options => options.UseInMemoryDatabase("MiDb-C"));          
             
             builder.Services.AddControllersWithViews();
 

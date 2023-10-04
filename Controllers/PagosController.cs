@@ -12,9 +12,9 @@ namespace Estacionamiento_C.Controllers
 {
     public class PagosController : Controller
     {
-        private readonly MiDbContext _miDb;
+        private readonly GarageContext _miDb;
 
-        public PagosController(MiDbContext context)
+        public PagosController(GarageContext context)
         {
             _miDb = context;
         }
@@ -148,7 +148,7 @@ namespace Estacionamiento_C.Controllers
         {
             if (_miDb.Pagos == null)
             {
-                return Problem("Entity set 'MiDbContext.Pagos'  is null.");
+                return Problem("Entity set 'GarageContext.Pagos'  is null.");
             }
             var pago = await _miDb.Pagos.FindAsync(id);
             if (pago != null)
