@@ -1,10 +1,12 @@
 ﻿using Estacionamiento_C.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
 namespace Estacionamiento_C.Data
 {
-    public class GarageContext : DbContext
+    public class GarageContext : IdentityDbContext<IdentityUser<int>,IdentityRole<int>,int>
     {
         public GarageContext(DbContextOptions options) : base(options)
         {
@@ -17,10 +19,14 @@ namespace Estacionamiento_C.Data
 
             
             modelBuilder.Entity<ClienteVehiculo>().HasKey(cv => new { cv.ClienteId,cv.VehiculoId});
-            
+
+            modelBuilder.Entity<IdentityUser<int>>().ToTable("Personas");
+
+
 
         }
 
+        public DbSet<Rol> Roles { get; set; }
 
         public DbSet<Persona> Personas { get; set; }
         public DbSet<Cliente> Clientes { get; set; }

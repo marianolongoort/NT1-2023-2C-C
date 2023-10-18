@@ -6,6 +6,8 @@ namespace Estacionamiento_C.Models
     public class Direccion
     {
         public int Id { get; set; }
+        [Required]
+        [StringLength(50, MinimumLength =5)]
         public string Calle { get; set; }
         public int Numero { get; set; }
         public int Piso { get; set; }

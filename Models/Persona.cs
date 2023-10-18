@@ -1,14 +1,15 @@
 ﻿using Estacionamiento_C.Helpers;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Estacionamiento_C.Models
 {
-    public class Persona
+    public class Persona : IdentityUser<int>
     {
         
-        public int Id { get; set; }
+        //public int Id { get; set; }
 
         [Required(ErrorMessage = ErrorMessages._reqMsg)]
         [StringLength(50, MinimumLength = 2, ErrorMessage = ErrorMessages._reqStrMinMax)]
@@ -28,8 +29,15 @@ namespace Estacionamiento_C.Models
         public DateTime FechaNacimiento { get; set; }
 
 
-        [DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
+
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Correo electronico")]
+        public override string Email
+        {
+            get { return base.Email; }
+            set { base.Email = value; }
+        }
 
         public List<Telefono> Telefonos { get; set; }
         public string Foto { get; set; } = "default.jpg";
