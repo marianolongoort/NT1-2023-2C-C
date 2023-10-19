@@ -99,6 +99,7 @@ namespace Estacionamiento_C.Controllers
             {
                 try
                 {
+                    //mapeo entre lo que esta en la db y lo que queremos editar desde el cliente.
                     _context.Update(cliente);
                     await _context.SaveChangesAsync();
                 }

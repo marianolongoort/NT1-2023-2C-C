@@ -3,12 +3,13 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Estacionamiento_C.Models
 {
     public class Persona : IdentityUser<int>
     {
-        
+
         //public int Id { get; set; }
 
         [Required(ErrorMessage = ErrorMessages._reqMsg)]
@@ -19,15 +20,14 @@ namespace Estacionamiento_C.Models
         [StringLength(100, MinimumLength = 2, ErrorMessage = ErrorMessages._reqStrMinMax)]
         public string Apellido { get; set; }
 
-        [Display(Name ="Documento")]
-        [Range(1000000,99999999,ErrorMessage = ErrorMessages._reqRange)]
+        [Display(Name = "Documento")]
+        [Range(1000000, 99999999, ErrorMessage = ErrorMessages._reqRange)]
         public int DNI { get; set; }
 
         [DataType(DataType.Date)]
         [Required(ErrorMessage = ErrorMessages._reqMsg)]
-        [Display(Name ="Fecha de Nacimiento")]
+        [Display(Name = "Fecha de Nacimiento")]
         public DateTime FechaNacimiento { get; set; }
-
 
 
         [Required]
