@@ -1,30 +1,45 @@
 ﻿using Estacionamiento_C.Data;
 using Estacionamiento_C.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Estacionamiento_C.Controllers
 {
     public class PreCargaDbController : Controller
     {
+        private readonly UserManager<Persona> _userManager;
+        private readonly SignInManager<Persona> _signInManager;
+        private readonly RoleManager<Rol> _roleManager;
         private readonly GarageContext _micontexto;
 
-        public PreCargaDbController(GarageContext contexto)
+        public PreCargaDbController(UserManager<Persona> userManager,
+            SignInManager<Persona> signInManager,
+            RoleManager<Rol> roleManager,
+            GarageContext contexto
+            )
         {
+            this._userManager = userManager;
+            this._signInManager = signInManager;
+            this._roleManager = roleManager;
             this._micontexto = contexto;
         }
 
         public IActionResult Seed()
         {
-            
+            CrearRoles().Wait();
+
+
+
             if (!_micontexto.Personas.Any())
             {
                 //no hay personas
-                AddPersonas();                
+                AddPersonas();
             }
             if (!_micontexto.Clientes.Any())
             {
@@ -37,8 +52,22 @@ namespace Estacionamiento_C.Controllers
             }
 
 
-            return RedirectToAction("Index","Home", new {mensaje = "Se ejecutó la pre-carga" });
+            return RedirectToAction("Index", "Home", new { mensaje = "Se ejecutó la pre-carga" });
         }
+
+        private async Task CrearRoles()
+        {
+            Rol rolclt = new Rol() {
+                Name = "ClienteRol"
+            };
+            Rol rolemp = new Rol()
+            {
+                Name = "EmpleadoRol"
+            };
+
+            var resultado1 = await _roleManager.CreateAsync(rolclt);
+            var resultado2 = await _roleManager.CreateAsync(rolemp);
+        }    
 
         private void AddVehiculos()
         {

@@ -1,6 +1,8 @@
 using Estacionamiento_C.Data;
 using Estacionamiento_C.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +25,14 @@ namespace Estacionamiento_C
                 .AddIdentity<Persona, Rol>()
                 .AddEntityFrameworkStores<GarageContext>();
 
+            builder.Services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme,
+                opciones=>
+                {
+                    opciones.LoginPath = "/Account/IniciarSesion";
+                    opciones.AccessDeniedPath = "/Account/AccesoDenegado";
+                }                
+                );
+
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
@@ -40,6 +50,7 @@ namespace Estacionamiento_C
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(

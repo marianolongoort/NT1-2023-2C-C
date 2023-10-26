@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Estacionamiento_C.Data;
 using Estacionamiento_C.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Estacionamiento_C.Controllers
 {
+    [Authorize]
     public class ClientesController : Controller
     {
         private readonly GarageContext _context;
@@ -20,8 +22,12 @@ namespace Estacionamiento_C.Controllers
         }
 
         // GET: Clientes
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
+            
+
+
               return View(await _context.Clientes.ToListAsync());
         }
 
@@ -44,6 +50,7 @@ namespace Estacionamiento_C.Controllers
         }
 
         // GET: Clientes/Create
+        [Authorize(Roles = "EmpleadoRol")]
         public IActionResult Create()
         {
             
@@ -56,6 +63,7 @@ namespace Estacionamiento_C.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "EmpleadoRol")]
         public async Task<IActionResult> Create([Bind("CUIT,Id,Nombre,Apellido,DNI,FechaNacimiento,Email,Foto")] Cliente cliente)
         {
             if (ModelState.IsValid)
@@ -76,11 +84,20 @@ namespace Estacionamiento_C.Controllers
             }
 
             var cliente = await _context.Clientes.FindAsync(id);
+
             if (cliente == null)
             {
                 return NotFound();
             }
-            return View(cliente);
+
+            string username = User.Identity.Name;
+
+            if (username.ToUpper().Equals(cliente.NormalizedUserName))
+            {
+                return View(cliente);
+            }
+
+            return RedirectToAction(nameof(Index));            
         }
 
         // POST: Clientes/Edit/5
@@ -88,9 +105,9 @@ namespace Estacionamiento_C.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CUIT,Id,Nombre,Apellido,DNI,FechaNacimiento,Email,Foto")] Cliente cliente)
+        public async Task<IActionResult> Edit(int id, [Bind("CUIT,Id,Nombre,Apellido,DNI,FechaNacimiento,Email,Foto")] Cliente clienteEnForm)
         {
-            if (id != cliente.Id)
+            if (id != clienteEnForm.Id)
             {
                 return NotFound();
             }
@@ -99,13 +116,26 @@ namespace Estacionamiento_C.Controllers
             {
                 try
                 {
-                    //mapeo entre lo que esta en la db y lo que queremos editar desde el cliente.
-                    _context.Update(cliente);
+                    //mapeo entre lo que esta en la db y lo que queremos editar desde el clienteEnForm.
+
+                    Cliente clienteEnDb = _context.Clientes.Find(id);
+                    if (clienteEnDb != null)
+                    {
+                        //mapeo lo que quiero editar
+                        clienteEnDb.CUIT = clienteEnForm.CUIT;
+                        clienteEnDb.Nombre = clienteEnForm.Nombre;
+                        clienteEnDb.Apellido = clienteEnForm.Apellido;
+                        clienteEnDb.DNI = clienteEnForm.DNI;
+                        clienteEnDb.FechaNacimiento = clienteEnForm.FechaNacimiento;
+                    }
+
+
+                    _context.Update(clienteEnDb);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ClienteExists(cliente.Id))
+                    if (!ClienteExists(clienteEnForm.Id))
                     {
                         return NotFound();
                     }
@@ -116,7 +146,7 @@ namespace Estacionamiento_C.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(cliente);
+            return View(clienteEnForm);
         }
 
         // GET: Clientes/Delete/5
